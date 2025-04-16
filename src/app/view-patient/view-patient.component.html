@@ -1,0 +1,61 @@
+<!-- Your navbar remains unchanged -->
+
+
+
+<!-- 🖨️ Printable Area -->
+<div class="container mt-3" id="print-section">
+  <div class="text-center mb-3">
+    <img src="http://localhost:4200/assets\medconnect2-logo.png" alt="MedConnect Logo" width="120">
+    <p><strong>Date & Time:</strong> {{ currentDateTime }}</p>
+  </div>
+  <div class="card shadow-lg p-4 mt-4">
+    <h4 class="text-center text-primary mb-4">Patient Prescription Details</h4>
+  
+    <table class="table table-hover table-striped table-bordered">
+      <tbody>
+        <tr>
+          <th class="bg-light text-secondary">ID</th>
+          <td>{{ patient.id }}</td>
+        </tr>
+        <tr>
+          <th class="bg-light text-secondary">Name</th>
+          <td>{{ patient.name }}</td>
+        </tr>
+        <tr>
+          <th class="bg-light text-secondary">Age</th>
+          <td>{{ patient.age }}</td>
+        </tr>
+        <tr>
+          <th class="bg-light text-secondary">Blood Group</th>
+          <td>{{ patient.blood }}</td>
+        </tr>
+        <tr>
+          <th class="bg-light text-secondary">Dose</th>
+          <td>{{ patient.dose }}</td>
+        </tr>
+        <tr>
+          <th class="bg-light text-secondary">Prescription</th>
+          <td>{{ patient.prescription }}</td>
+        </tr>
+        <tr>
+          <th class="bg-light text-secondary">Fees</th>
+          <td>{{ patient.fees }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+
+  <h4>Dr. Kadam</h4>
+  <p>(BHMS)Bachelor of Homeopathic Medicine and Surgery</p>
+  <p>Phone:+91 9699-590-048</p>
+</div>
+
+<!-- 🖨️ Print Button -->
+<div class="text-center mt-3">
+  <button class="btn btn-outline-dark" (click)="printPage()">🖨️ Print Prescription</button>
+</div>
+<button (click)="sendPrescription()" class="btn btn-success mt-2">
+  Send Prescription via WhatsApp
+</button>
+
