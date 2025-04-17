@@ -72,7 +72,8 @@ export class MedicinelistComponent {
 
   delete(id: number) {
     this.http.delete(`https://medconnect-backend-283p.onrender.com/api/v3/medicines/${id}`
-).subscribe(() => {
+).subscribe(() =>
+   {
       this.getMedicine();
     });
   }
