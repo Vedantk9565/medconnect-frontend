@@ -28,7 +28,8 @@ export class MedicinelistComponent {
   }
 
   getMedicine() {
-    this.http.get<Medicine[]>("http://localhost:8080/api/v3/medicines").subscribe(data => {
+    this.http.get<Medicine[]>("https://medconnect-backend-283p.onrender.com/api/v3/medicines")
+    .subscribe(data => {
       this.medicines = data;
     });
   }
@@ -49,7 +50,7 @@ export class MedicinelistComponent {
     }
 
     this.http.put(
-      `http://localhost:8080/api/v1/patients/${this.patientId}/add-medicine`,
+     `https://medconnect-backend-283p.onrender.com/api/v1/patients/${this.patientId}/add-medicine`,
       this.selectedMedicines,
       { responseType: 'text' } // 👈 this fixes it
     ).subscribe({
@@ -70,7 +71,8 @@ export class MedicinelistComponent {
   }
 
   delete(id: number) {
-    this.http.delete(`http://localhost:8080/api/v3/medicines/${id}`).subscribe(() => {
+    this.http.delete(`https://medconnect-backend-283p.onrender.com/api/v3/medicines/${id}`
+).subscribe(() => {
       this.getMedicine();
     });
   }
