@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BASE_URL } from './constants'; // Optional centralized base URL
-
+import { environment } from '../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class PrescriptionService {
+export class PrescriptionService
+ {
 
-  private baseUrl = `${BASE_URL}/api/v1/prescriptions`; 
-
+  
+  private baseUrl = `${environment.apiUrl}/api/v1/prescriptions`;
   constructor(private http: HttpClient) {}
 
   // Call the PDF WhatsApp sending endpoint

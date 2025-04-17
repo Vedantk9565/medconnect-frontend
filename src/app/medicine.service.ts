@@ -2,15 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Medicine } from './medicine';
-
+import { environment } from '../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class MedicineService {
 
   constructor(private httpClient:HttpClient) { }
-
-  private baseUrl="http://localhost:8080/api/v3/medicines"
+  private baseUrl = `${environment.apiUrl}/api/v3/medicines`;
+  
 
   getMedicines():Observable<Medicine[]>
   {
