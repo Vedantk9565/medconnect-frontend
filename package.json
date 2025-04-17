@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --configuration production",
-    "postbuild": "cp src/redirects/_redirects dist/frontend-medconnect/",
+    "postbuild": "shx cp src/redirects/_redirects dist/frontend-medconnect/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -14,7 +14,7 @@
     "@angular/animations": "^17.3.0",
     "@angular/common": "^17.3.0",
     "@angular/compiler": "^17.3.0",
-    "@angular/core": "^17.3.0", 
+    "@angular/core": "^17.3.0",
     "@angular/forms": "^17.3.0",
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
@@ -36,7 +36,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "shx": "^0.4.0",
     "typescript": "~5.4.2"
   }
-  
 }
