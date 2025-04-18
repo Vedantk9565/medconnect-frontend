@@ -9,9 +9,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         
         
-          <li class="nav-item">
-            <a style="color: white;"class="nav-link active" aria-current="page" href="javascript:void(0);" routerLink="/create-patient">Add Patient</a>
-          </li>
+          
           <li class="nav-item">
             <a style="color: white;"class="nav-link active" aria-current="page" href="javascript:void(0);" routerLink="/view-medicine">View Medicines</a>
           </li>
@@ -33,12 +31,17 @@
   <hr>
     <h2 style="text-align: center;margin-top: 20PX;"> Dashboard</h2>
     <a style="color: rgb(86, 86, 86); font-size: x-large;"><marquee behavior="scroll" direction="left">
-      Welcome to Doctor Dashboard. Please find the patient list below!!. Click Appointments to view and update Appointments, Click Add Appointment to add new Appointment</marquee></a>
+      Doctor Dashboard.</marquee></a>
   <hr>
   <!--<input type="text" name="search" [(ngModel)]="searchText" placeholder="Search" (input)="searchPatients()"> -->
   <br>
-    <a style="color: rgb(86, 86, 86); font-size: xx-large;">Current Patient List in the Queue</a>
-
+    <a style="color: rgb(86, 86, 86); font-size: xx-large;">Patient List </a>
+    
+    <div style="display: flex; justify-content: flex-end;">
+      <a style="color: white;" class="nav-link active" aria-current="page" routerLink="/create-patient">Add Patient</a>
+    </div>
+    
+    
     <div class="tableFixHead">
 <table class="table table-striped">
 
