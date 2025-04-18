@@ -74,7 +74,7 @@ export class MedicinelistComponent {
       medicineId: medicine.id,  // Use the id here
       timeToTake: medicine.timeToTake
     }));
-
+    console.log('Request Payload:', medicinesWithTime);  // Log the payload
     this.http.put(
       `https://medconnect-backend-283p.onrender.com/api/v1/patients/${this.patientId}/add-medicine`,
       medicinesWithTime,
