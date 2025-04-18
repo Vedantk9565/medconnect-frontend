@@ -16,41 +16,36 @@
 </nav>
 
 <div class="container">
-  <hr>
-  <h2 class="text-center mt-3">Medicines</h2>
-  <br>
-  <a style="color: rgb(86, 86, 86); font-size: 25px;">Welcome To Medicine List Page. Click Add Medicine To Add Medicines.</a>
-  <hr>
+  <h2>Medicines</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Select</th>
+        <th>Medicine Name</th>
+        <th>Time To Take</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let medicine of medicines">
+        <td>
+          <input type="checkbox" [value]="medicine.drugName" (change)="toggleMedicineSelection(medicine, $event)">
+        </td>
+        <td>{{medicine.drugName}}</td>
+        <td>
+          <select *ngIf="isSelected(medicine)"
+                  [ngModel]="getSelectedMedicine(medicine)?.timeToTake"
+                  (ngModelChange)="updateTimeToTake(medicine, $event)">
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Night">Night</option>
+          </select>
+        </td>
+        
+        
+      </tr>
+    </tbody>
+  </table>
 
-  <div class="tableFixHead">
-    <table class="table table-striped">
-      <thead class="table-header">
-        <tr>
-          <th>Select</th>
-          <th>ID</th>
-          <th>Drug Name</th>
-          <th>Stock</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let medicine of medicines">
-          <td>
-            <input type="checkbox" [value]="medicine.drugName" (change)="toggleMedicineSelection(medicine.drugName, $event)">
-          </td>
-          <td>{{medicine.id}}</td>
-          <td>{{medicine.drugName}}</td>
-          <td>{{medicine.stock}}</td>
-          <td>
-            <button class="btn btn-info" (click)="update(medicine.id)">Update</button>  
-            <button style="margin: 10px;" class="btn btn-danger" (click)="delete(medicine.id)">Delete</button> 
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="text-center mt-3">
-    <button class="btn btn-success" (click)="assignSelectedMedicines()">Assign Selected Medicines to Patient</button>
-  </div>
+  <button class="btn btn-primary" (click)="assignSelectedMedicines()">Assign Selected Medicines</button>
 </div>
+
