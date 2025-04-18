@@ -71,9 +71,10 @@ export class MedicinelistComponent {
 
     // Send selected medicines and their times to the backend
     const medicinesWithTime = this.selectedMedicines.map(medicine => ({
-      medicineId: medicine.id,  // Use the id here
+      medicineName: medicine.name,
       timeToTake: medicine.timeToTake
     }));
+    
     console.log('Request Payload:', medicinesWithTime);  // Log the payload
     this.http.put(
       `https://medconnect-backend-283p.onrender.com/api/v1/patients/${this.patientId}/add-medicine`,
