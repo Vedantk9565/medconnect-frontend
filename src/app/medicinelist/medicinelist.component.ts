@@ -10,10 +10,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MedicinelistComponent {
   medicines: Medicine[] = [];
-  selectedMedicines: { name: string, timeToTake: string }[] = [];  // Store name and time for selected medicines
+  selectedMedicines: { id: number, name: string, timeToTake: string }[] = [];  // Added id to the type
   patientId!: number;
-  
-
 
   constructor(
     private router: Router,
@@ -39,22 +37,23 @@ export class MedicinelistComponent {
   toggleMedicineSelection(medicine: Medicine, event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
     medicine.isSelected = isChecked;
-  
+
     if (isChecked) {
+      // Added the id to the selected medicines
       this.selectedMedicines.push({
+        id: medicine.id,
         name: medicine.drugName,
-        timeToTake: '' // Empty until selected
+        timeToTake: ''  // Empty time until selected by user
       });
     } else {
-      this.selectedMedicines = this.selectedMedicines.filter(m => m.name !== medicine.drugName);
+      // Filter based on id instead of name to remove the correct medicine
+      this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
     }
   }
-  
-  
+
   isSelected(medicine: Medicine): boolean {
     return !!medicine.isSelected;
   }
-  
 
   assignSelectedMedicines() {
     if (this.selectedMedicines.length === 0) {
@@ -70,9 +69,9 @@ export class MedicinelistComponent {
       }
     }
 
-    // Send selected medicines and their times to backend
+    // Send selected medicines and their times to the backend
     const medicinesWithTime = this.selectedMedicines.map(medicine => ({
-      medicineId: medicine.name,  // Adjust based on how the backend expects this
+      medicineId: medicine.id,  // Use the id here
       timeToTake: medicine.timeToTake
     }));
 
@@ -102,15 +101,16 @@ export class MedicinelistComponent {
         this.getMedicine();
       });
   }
+
   getSelectedMedicine(medicine: Medicine) {
     return this.selectedMedicines.find(m => m.name === medicine.drugName);
   }
-  
+
   updateTimeToTake(medicine: Medicine, time: string) {
     const selected = this.selectedMedicines.find(m => m.name === medicine.drugName);
     if (selected) {
       selected.timeToTake = time;
     }
   }
-  
+
 }
