@@ -39,18 +39,18 @@ export class MedicinelistComponent {
     medicine.isSelected = isChecked;
   
     if (isChecked) {
-      // Attach the timeToTake array directly to the medicine object
-      (medicine as any).timeToTake = [];
-  
+      // Initialize an empty timeToTake array for the selected medicine
       this.selectedMedicines.push({
         id: medicine.id,
         name: medicine.drugName,
-        timeToTake: (medicine as any).timeToTake
+        timeToTake: []  // Empty array until times are selected
       });
     } else {
+      // Remove the medicine from selectedMedicines by id
       this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
     }
   }
+  
   
 
   isSelected(medicine: Medicine): boolean {
@@ -112,13 +112,13 @@ export class MedicinelistComponent {
 
   
   updateMultipleTimesToTake(medicine: Medicine, selectedTimes: string[]) {
-    // Find the selected medicine in the array
     const selected = this.selectedMedicines.find(m => m.id === medicine.id);
     if (selected) {
-      // Update its 'timeToTake' with the selected values
+      // Update the selected medicine's timeToTake with the array of selected times
       selected.timeToTake = selectedTimes;
     }
   }
+  
   
   
   
