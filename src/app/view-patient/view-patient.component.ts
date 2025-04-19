@@ -84,7 +84,7 @@ export class ViewPatientComponent {
   }
   
   assignSelectedMedicines() {
-    const patientId = this.patient.id;
+    const patientId = this.route.snapshot.queryParams['patientId'];
   
     const data = this.selectedMedicines.map(med => ({
       medicineName: med.medicineName,
