@@ -74,7 +74,7 @@ export class MedicinelistComponent {
     // Send selected medicines and their times to the backend
     const medicinesWithTime = this.selectedMedicines.map(medicine => ({
       medicineName: medicine.name,
-      timeToTake: medicine.timeToTake.join(', ')
+      timeToTake: medicine.timeToTake
     }));
   
     console.log('Request Payload:', medicinesWithTime);  // Log the payload
