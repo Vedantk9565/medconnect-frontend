@@ -41,6 +41,7 @@ export class ViewPatientComponent {
       const now = new Date();
       this.currentDateTime = now.toLocaleString();
     });
+
   }
   
   
@@ -82,4 +83,25 @@ export class ViewPatientComponent {
     });
   }
   
+  assignSelectedMedicines() {
+    const patientId = this.patient.id;
+  
+    const data = this.selectedMedicines.map(med => ({
+      medicineName: med.medicineName,
+      timeToTake: med.timeToTake
+    }));
+  
+    this.prescriptionService.assignMedicines(patientId, data).subscribe({
+      next: () => {
+        alert('Medicines assigned successfully!');
+      },
+      error: (err) => {
+        console.error('Error assigning medicines:', err);
+        alert('Failed to assign medicines.');
+      }
+    });
+  }
+  
+  selectedMedicines: { medicineName: string; timeToTake: string[] }[] = [];
+
 }
