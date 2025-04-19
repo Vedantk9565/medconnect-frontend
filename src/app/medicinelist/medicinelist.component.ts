@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MedicinelistComponent {
   medicines: Medicine[] = [];
-  selectedMedicines: { id: number, name: string, timeToTake: string }[] = [];  // Added id to the type
+  selectedMedicines: { id: number, name: string, timeToTake: string[] } []=[];  // Added id to the type
   patientId!: number;
 
   constructor(
@@ -43,12 +43,13 @@ export class MedicinelistComponent {
       this.selectedMedicines.push({
         id: medicine.id,
         name: medicine.drugName,
-        timeToTake: ''  // Empty time until selected by user
+        timeToTake: []  // Empty time until selected by user
       });
     } else {
       // Filter based on id instead of name to remove the correct medicine
       this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
     }
+    
   }
 
   isSelected(medicine: Medicine): boolean {
@@ -60,21 +61,21 @@ export class MedicinelistComponent {
       alert("Please select at least one medicine.");
       return;
     }
-
+  
     // Make sure each selected medicine has a time assigned
     for (const medicine of this.selectedMedicines) {
-      if (!medicine.timeToTake) {
-        alert(`Please select a time for medicine: ${medicine.name}`);
+      if (!medicine.timeToTake || medicine.timeToTake.length === 0) {
+        alert(`Please select at least one time for medicine: ${medicine.name}`);
         return;
       }
     }
-
+  
     // Send selected medicines and their times to the backend
     const medicinesWithTime = this.selectedMedicines.map(medicine => ({
       medicineName: medicine.name,
-      timeToTake: medicine.timeToTake
+      timeToTake: medicine.timeToTake.join(', ')
     }));
-    
+  
     console.log('Request Payload:', medicinesWithTime);  // Log the payload
     this.http.put(
       `https://medconnect-backend-283p.onrender.com/api/v1/patients/${this.patientId}/add-medicine`,
@@ -91,6 +92,7 @@ export class MedicinelistComponent {
       }
     });
   }
+  
 
   update(id: number) {
     this.router.navigate(['update-medicine', id]);
@@ -107,11 +109,14 @@ export class MedicinelistComponent {
     return this.selectedMedicines.find(m => m.name === medicine.drugName);
   }
 
-  updateTimeToTake(medicine: Medicine, time: string) {
-    const selected = this.selectedMedicines.find(m => m.name === medicine.drugName);
+  
+  updateMultipleTimesToTake(medicine: Medicine, selectedTimes: string[]) {
+    const selected = this.selectedMedicines.find(m => m.id === medicine.id);
     if (selected) {
-      selected.timeToTake = time;
+      selected.timeToTake = selectedTimes;
     }
   }
+  
+  
 
 }

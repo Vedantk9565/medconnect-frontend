@@ -35,7 +35,8 @@
         <td>
           <select *ngIf="isSelected(medicine)"
                   [ngModel]="getSelectedMedicine(medicine)?.timeToTake"
-                  (ngModelChange)="updateTimeToTake(medicine, $event)">
+                  (ngModelChange)="updateMultipleTimesToTake(medicine, $event)"
+                  multiple>
             <option value="Morning">Morning</option>
             <option value="Afternoon">Afternoon</option>
             <option value="Night">Night</option>
@@ -45,8 +46,7 @@
     </tbody>
   </table>
   
-<div class="text-center mt-3">
-  <button class="btn btn-primary" (click)="assignSelectedMedicines()">Assign Selected Medicines</button>
+  <div class="text-center mt-3">
+    <button class="btn btn-primary" (click)="assignSelectedMedicines()">Assign Selected Medicines</button>
+  </div>
 </div>
-</div>
-
