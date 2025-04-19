@@ -3,7 +3,7 @@ export class Patient {
     name:string="";
     age:string="";
     blood:string="";
-    prescription:string="";
+    prescription: { medicineName: string, timeToTake: string }[] = [];
     dose:string="";
     fees:string="";
     urgency:string="";

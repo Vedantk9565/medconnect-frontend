@@ -26,10 +26,26 @@ export class ViewPatientComponent {
     this.id = this.route.snapshot.params['id'];
     this.patientService.getPatientById(this.id).subscribe(data => {
       this.patient = data;
+  
+      // Check if prescription is a string (for example, 'Amoxicillin, Crosin')
+      if (typeof this.patient.prescription === 'string') {
+        // If it's a string, split it into an array of objects
+        this.patient.prescription = (this.patient.prescription as string).split(',').map((medicine: string) => ({
+          medicineName: medicine.trim(),  // Remove extra spaces
+          timeToTake: 'Morning'  // Default time, or handle accordingly
+        }));
+      }
+  
+      console.log(this.patient.prescription); // Log the transformed structure
+  
       const now = new Date();
       this.currentDateTime = now.toLocaleString();
     });
   }
+  
+  
+  
+  
 
   printPage(): void {
     const printContents = document.getElementById('print-section')?.innerHTML;
