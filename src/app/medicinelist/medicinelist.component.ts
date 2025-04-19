@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Medicine } from '../medicine';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-medicinelist',
   templateUrl: './medicinelist.component.html',
@@ -37,20 +37,21 @@ export class MedicinelistComponent {
   toggleMedicineSelection(medicine: Medicine, event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
     medicine.isSelected = isChecked;
-
+  
     if (isChecked) {
-      // Added the id to the selected medicines
+      // Attach the timeToTake array directly to the medicine object
+      (medicine as any).timeToTake = [];
+  
       this.selectedMedicines.push({
         id: medicine.id,
         name: medicine.drugName,
-        timeToTake: []  // Empty time until selected by user
+        timeToTake: (medicine as any).timeToTake
       });
     } else {
-      // Filter based on id instead of name to remove the correct medicine
       this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
     }
-    
   }
+  
 
   isSelected(medicine: Medicine): boolean {
     return !!medicine.isSelected;
@@ -111,11 +112,14 @@ export class MedicinelistComponent {
 
   
   updateMultipleTimesToTake(medicine: Medicine, selectedTimes: string[]) {
+    // Find the selected medicine in the array
     const selected = this.selectedMedicines.find(m => m.id === medicine.id);
     if (selected) {
+      // Update its 'timeToTake' with the selected values
       selected.timeToTake = selectedTimes;
     }
   }
+  
   
   
 
