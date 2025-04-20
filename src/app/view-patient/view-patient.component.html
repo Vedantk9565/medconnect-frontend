@@ -41,9 +41,8 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- Loop over the medicines and display their times -->
                 <tr *ngFor="let prescription of patient.prescription">
-                  <td>{{ prescription.medicineName }}</td>
+                  <td>{{ prescription.medicine.drugName}}</td>
                   <td>{{ prescription.timeToTake }}</td>
                 </tr>
                 
