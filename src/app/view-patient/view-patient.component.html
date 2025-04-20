@@ -42,10 +42,11 @@
               </thead>
               <tbody>
                 <!-- Loop over the medicines and display their times -->
-                <tr *ngFor="let medicine of patient.prescription">
-                  <td>{{ medicine.medicineName }}</td>
-                  <td>{{ medicine.timeToTake }}</td>
+                <tr *ngFor="let prescription of patient.prescription">
+                  <td>{{ prescription.medicineName }}</td>
+                  <td>{{ prescription.timeToTake }}</td>
                 </tr>
+                
               </tbody>
             </table>
           </td>

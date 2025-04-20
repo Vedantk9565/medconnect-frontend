@@ -28,13 +28,7 @@ export class ViewPatientComponent {
       this.patient = data;
   
       // Check if prescription is a string (for example, 'Amoxicillin, Crosin')
-      if (typeof this.patient.prescription === 'string') {
-        // If it's a string, split it into an array of objects
-        this.patient.prescription = (this.patient.prescription as string).split(',').map((medicine: string) => ({
-          medicineName: medicine.trim(),  // Remove extra spaces
-          timeToTake: 'Morning'  // Default time, or handle accordingly
-        }));
-      }
+      
   
       console.log(this.patient.prescription); // Log the transformed structure
   
@@ -83,25 +77,25 @@ export class ViewPatientComponent {
     });
   }
   
-  assignSelectedMedicines() {
-    const patientId = this.route.snapshot.queryParams['patientId'];
-  
-    const data = this.selectedMedicines.map(med => ({
-      medicineName: med.medicineName,
-      timeToTake: med.timeToTake
-    }));
-  
-    this.prescriptionService.assignMedicines(patientId, data).subscribe({
-      next: () => {
-        alert('Medicines assigned successfully!');
-      },
-      error: (err) => {
-        console.error('Error assigning medicines:', err);
-        alert('Failed to assign medicines.');
-      }
-    });
-  }
-  
-  selectedMedicines: { medicineName: string; timeToTake: string[] }[] = [];
+  selectedMedicines: { medicineId: number; timeToTake: string }[] = [];
+
+assignSelectedMedicines() {
+  const patientId = this.route.snapshot.queryParams['patientId'];
+
+  const data = this.selectedMedicines.map(med => ({
+    medicineId: med.medicineId,
+    timeToTake: med.timeToTake
+  }));
+
+  this.prescriptionService.assignMedicines(patientId, data).subscribe({
+    next: () => {
+      alert('Medicines assigned successfully!');
+    },
+    error: (err) => {
+      console.error('Error assigning medicines:', err);
+      alert('Failed to assign medicines.');
+    }
+  });
+}
 
 }
