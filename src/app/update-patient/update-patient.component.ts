@@ -2,37 +2,41 @@ import { Component } from '@angular/core';
 import { Patient } from '../patient';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '../patient.service';
-import { BASE_URL } from '../constants';  // adjust path as needed
 
 @Component({
   selector: 'app-update-patient',
   templateUrl: './update-patient.component.html',
-  styleUrl: './update-patient.component.css'
+  styleUrls: ['./update-patient.component.css']
 })
 export class UpdatePatientComponent {
+  id: number = 0;
+  patient: Patient = new Patient();
 
-  id:number=0;
-  constructor(private route:ActivatedRoute,private patientService:PatientService, private router:Router){}
-  patient:Patient=new Patient();
+  constructor(private route: ActivatedRoute, private patientService: PatientService, private router: Router) { }
 
-  ngOnInit():void
-  {
-    this.id=this.route.snapshot.params['id'];
-    this.patientService.getPatientById(this.id).subscribe(data=>{
-      this.patient=data;
-    
-  })
-}
-  onSubmit()
-  {
-    this.patientService.updatePatient(this.id,this.patient).subscribe(data=>{
-      console.log.apply(data);
-      this.goToDocDash();
-    })
+  ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
+    this.patientService.getPatientById(this.id).subscribe(data => {
+      this.patient = data;
+    });
   }
-  
-  goToDocDash()
-  {
-    this.router.navigate(['docdash'])
+
+  onSubmit() {
+    this.patientService.updatePatient(this.id, this.patient).subscribe(data => {
+      console.log(data);
+      this.goToDocDash();
+    });
+  }
+
+  goToDocDash() {
+    this.router.navigate(['docdash']);
+  }
+
+  addPrescription() {
+    this.patient.prescription.push({ medicineId: null, dosage: '', timeToTake: [] });
+  }
+
+  removePrescription(index: number) {
+    this.patient.prescription.splice(index, 1);
   }
 }
