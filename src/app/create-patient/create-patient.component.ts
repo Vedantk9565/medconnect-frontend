@@ -30,4 +30,12 @@ export class CreatePatientComponent {
     this.router.navigate(['/docdash'])
   }
 
+  phoneNumber: string = "+91";
+
+addCountryCode() {
+  if (!this.phoneNumber.startsWith("+91")) {
+    this.phoneNumber = "+91" + this.phoneNumber.replace(/^\+*/, '');
+  }
+}
+
 }
