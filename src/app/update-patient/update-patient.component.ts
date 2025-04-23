@@ -3,7 +3,7 @@ import { Patient } from '../patient';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '../patient.service';
 import { BASE_URL } from '../constants';  // adjust path as needed
-
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-update-patient',
   templateUrl: './update-patient.component.html',
@@ -26,7 +26,7 @@ export class UpdatePatientComponent {
   onSubmit()
   {
     this.patientService.updatePatient(this.id,this.patient).subscribe(data=>{
-      console.log.apply(data);
+      console.log(data);
       this.goToDocDash();
     })
   }

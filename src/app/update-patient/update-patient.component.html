@@ -28,7 +28,7 @@
 
     <h2 class="text-center">Update Patient</h2>
     
-    <form (ngSubmit)="onSubmit()" >
+    <form (ngSubmit)="onSubmit()" #f="ngForm" >
     <div class="form-group">
 
         <label>Name</label>
@@ -71,6 +71,6 @@
         <input type="text" id="urgency" name="urgency" placeholder="Enter Your Urgency" class="form-control" [(ngModel)]="patient.urgency"/>
     
     </div>
-    <button type="submit" class="btn btn-success" routerLink="/docdash">Submit</button>
+    <button type="submit" class="btn btn-success" >Submit</button>
 </form>
 </div>
