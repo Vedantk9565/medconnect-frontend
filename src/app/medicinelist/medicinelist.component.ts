@@ -38,21 +38,25 @@ export class MedicinelistComponent {
     const isChecked = (event.target as HTMLInputElement).checked;
     medicine.isSelected = isChecked;
   
-    const existing = this.selectedMedicines.find(m => m.id === medicine.id);
+    const existingIndex = this.selectedMedicines.findIndex(m => m.id === medicine.id);
   
     if (isChecked) {
-      if (!existing) {
+      // If not already added, add it
+      if (existingIndex === -1) {
         this.selectedMedicines.push({
           id: medicine.id,
           name: medicine.drugName,
-          timeToTake: [] // initialize once
+          timeToTake: []
         });
       }
     } else {
-      // Remove if unchecked
-      this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
+      // If unchecked, remove it
+      if (existingIndex !== -1) {
+        this.selectedMedicines.splice(existingIndex, 1);
+      }
     }
   }
+  
   
   
   
@@ -116,8 +120,9 @@ export class MedicinelistComponent {
   }
 
   getSelectedMedicine(medicine: Medicine) {
-    return this.selectedMedicines.find(m => m.name === medicine.drugName);
+    return this.selectedMedicines.find(m => m.id === medicine.id);
   }
+  
 
   
   updateMultipleTimesToTake(medicine: Medicine, selectedTimes: string[]) {
