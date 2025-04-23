@@ -38,18 +38,22 @@ export class MedicinelistComponent {
     const isChecked = (event.target as HTMLInputElement).checked;
     medicine.isSelected = isChecked;
   
+    const existing = this.selectedMedicines.find(m => m.id === medicine.id);
+  
     if (isChecked) {
-      // Initialize an empty timeToTake array for the selected medicine
-      this.selectedMedicines.push({
-        id: medicine.id,
-        name: medicine.drugName,
-        timeToTake: []  // Empty array until times are selected
-      });
+      if (!existing) {
+        this.selectedMedicines.push({
+          id: medicine.id,
+          name: medicine.drugName,
+          timeToTake: [] // initialize once
+        });
+      }
     } else {
-      // Remove the medicine from selectedMedicines by id
+      // Remove if unchecked
       this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
     }
   }
+  
   
   
 
@@ -92,6 +96,11 @@ export class MedicinelistComponent {
         alert('Failed to assign medicines.');
       }
     });
+
+    const uniqueMedicines = Array.from(
+      new Map(this.selectedMedicines.map(m => [m.id, m])).values()
+    );
+    
   }
   
 
