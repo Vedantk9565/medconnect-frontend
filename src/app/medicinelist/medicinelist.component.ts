@@ -36,23 +36,31 @@ export class MedicinelistComponent {
 
   toggleMedicineSelection(medicine: Medicine, event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
-    medicine.isSelected = isChecked;
   
-    // Find if the medicine is already in the selectedMedicines list
-    const existingMedicine = this.selectedMedicines.find(m => m.id === medicine.id);
-  
-    if (isChecked && !existingMedicine) {
-      // If the medicine is checked and not already added, add it to the list
-      this.selectedMedicines.push({
-        id: medicine.id,
-        name: medicine.drugName,
-        timeToTake: []  // Empty array for time slots
-      });
-    } else if (!isChecked && existingMedicine) {
-      // If the medicine is unchecked, remove it from the list
+    if (isChecked) {
+      // If the medicine is not already in selectedMedicines, add it
+      const existingMedicine = this.selectedMedicines.find(m => m.id === medicine.id);
+      if (!existingMedicine) {
+        this.selectedMedicines.push({
+          id: medicine.id,
+          name: medicine.drugName,
+          timeToTake: []  // Initialize empty timeToTake array
+        });
+      }
+    } else {
+      // Remove the medicine from selectedMedicines when unchecked
       this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
     }
   }
+  
+  updateSelectedTimes(medicine: Medicine, selectedTimes: string[]) {
+    // Update the timeToTake for the selected medicine
+    const selectedMedicine = this.selectedMedicines.find(m => m.id === medicine.id);
+    if (selectedMedicine) {
+      selectedMedicine.timeToTake = selectedTimes;
+    }
+  }
+  
   
   
   

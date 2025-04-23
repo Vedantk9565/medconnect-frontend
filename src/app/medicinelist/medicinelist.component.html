@@ -39,14 +39,15 @@
               [(ngModel)]="selectedMed.timeToTake"
               name="timeToTake-{{medicine.id}}"
               class="form-control"
+              (change)="updateSelectedTimes(medicine, selectedMed.timeToTake)"
             >
               <option value="Morning">Morning</option>
               <option value="Afternoon">Afternoon</option>
               <option value="Night">Night</option>
             </select>
           </ng-container>
-          
         </td>
+        
         
       </tr>
     </tbody>
