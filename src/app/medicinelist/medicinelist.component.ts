@@ -38,20 +38,21 @@ export class MedicinelistComponent {
     const isChecked = (event.target as HTMLInputElement).checked;
   
     if (isChecked) {
-      // If the medicine is not already in selectedMedicines, add it
-      const existingMedicine = this.selectedMedicines.find(m => m.id === medicine.id);
-      if (!existingMedicine) {
+      // Only add if not already selected
+      const alreadyExists = this.selectedMedicines.some(m => m.id === medicine.id);
+      if (!alreadyExists) {
         this.selectedMedicines.push({
           id: medicine.id,
           name: medicine.drugName,
-          timeToTake: []  // Initialize empty timeToTake array
+          timeToTake: [] // Wait for selection
         });
       }
     } else {
-      // Remove the medicine from selectedMedicines when unchecked
+      // Remove from selectedMedicines
       this.selectedMedicines = this.selectedMedicines.filter(m => m.id !== medicine.id);
     }
   }
+  
   
   updateSelectedTimes(medicine: Medicine, selectedTimes: string[]) {
     // Update the timeToTake for the selected medicine
@@ -109,6 +110,7 @@ export class MedicinelistComponent {
     const uniqueMedicines = Array.from(
       new Map(this.selectedMedicines.map(m => [m.id, m])).values()
     );
+    
     
   }
   
