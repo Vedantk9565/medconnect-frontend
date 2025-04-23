@@ -35,18 +35,17 @@
         <td>
           <ng-container *ngIf="getSelectedMedicine(medicine) as selectedMed">
             <select
-            multiple
-            [(ngModel)]="selectedMed.timeToTake"
-            name="timeToTake-{{medicine.id}}"
-            class="form-control"
-          >
-            <option *ngFor="let time of ['Morning', 'Afternoon', 'Night']" [ngValue]="time">
-              {{ time }}
-            </option>
-          </select>
-
-          
+              multiple
+              [(ngModel)]="selectedMed.timeToTake"
+              name="timeToTake-{{medicine.id}}"
+              class="form-control"
+            >
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+              <option value="Night">Night</option>
+            </select>
           </ng-container>
+          
         </td>
         
       </tr>
