@@ -8,12 +8,17 @@ import { Patient } from '../patient';
   selector: 'app-docdash',
   templateUrl: './docdash.component.html',
   styleUrls: ['./docdash.component.css']
+  
+
 })
 export class DocdashComponent {
 
   searchQuery: string = ''; // Model for search input
   patients: Patient[] = [];  // Original list of patients
   filteredPatients: Patient[] = [];  // Patients filtered by search
+  loading: boolean = false;
+
+
 
   constructor(
     private patientService: PatientService,
@@ -27,9 +32,11 @@ export class DocdashComponent {
 
   // Fetching the patient list from the backend
   getPatients(): void {
+    this.loading = true;
     this.patientService.getPatientList().subscribe(data => {
       this.patients = data;
       this.filteredPatients = data; // Initially, show all patients
+      this.loading = false;
     });
   }
 
@@ -73,14 +80,16 @@ export class DocdashComponent {
   assignMedicine(patientId: number): void {
     this.router.navigate(['/view-medicine'], { queryParams: { patientId } });
   }
-  searchPatients() {
-    const query = this.searchQuery.toLowerCase().trim();
-  
-    this.filteredPatients = this.patients.filter(patient => {
-      const nameMatch = patient.name.toLowerCase().includes(query);
-      const idMatch = patient.id.toString().includes(query);
-      return nameMatch || idMatch;
-    });
+  searchPatients(): void {
+    const query = this.searchQuery.trim();
+    if (query) {
+      this.patientService.searchPatients(query).subscribe(data => {
+        this.filteredPatients = data;
+      });
+    } else {
+      this.filteredPatients = this.patients; // fallback to original list if search cleared
+    }
   }
+  
   
 }

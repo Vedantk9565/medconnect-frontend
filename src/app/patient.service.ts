@@ -37,5 +37,10 @@ export class PatientService {
     return this.httpclient.put(`${this.baseUrl}/${id}/send-prescription`, request);
   }
 
+  // patient.service.ts
+searchPatients(query: string): Observable<Patient[]> {
+  return this.httpclient.get<Patient[]>(`${this.baseUrl}/search?query=${query}`);
+}
+
   
 }

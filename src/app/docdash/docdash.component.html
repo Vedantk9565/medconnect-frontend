@@ -42,18 +42,15 @@
       <input 
         type="text" 
         [(ngModel)]="searchQuery" 
-        (input)="searchPatient()" 
+        (input)="searchPatients()" 
         placeholder="Search by Name or ID"
       />
     </div>
     
-    <div *ngIf="filteredPatients.length > 0">
-      <ul>
-        <li *ngFor="let patient of filteredPatients">
-          {{ patient.name }} - {{ patient.id }}
-        </li>
-      </ul>
+    <div *ngIf="loading" class="text-center text-secondary my-3">
+      Loading patients...
     </div>
+    
     
     <div *ngIf="filteredPatients.length === 0 && searchQuery">
       No patients found.
