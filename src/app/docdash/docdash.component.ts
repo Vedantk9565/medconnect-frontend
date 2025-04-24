@@ -1,53 +1,86 @@
 import { Component } from '@angular/core';
-import { Patient } from '../patient';
 import { PatientService } from '../patient.service';
 import { Router } from '@angular/router';
 import { DocauthService } from '../docauth.service';
-import { BASE_URL } from '../constants';  // adjust path as needed
+import { Patient } from '../patient';
 
 @Component({
   selector: 'app-docdash',
   templateUrl: './docdash.component.html',
-  styleUrl: './docdash.component.css'
+  styleUrls: ['./docdash.component.css']
 })
 export class DocdashComponent {
 
-  constructor(private patientService:PatientService,private router:Router,private docauth:DocauthService){}
-  patients:Patient[]=[];
-  ngOnInit():void 
-  {
+  searchQuery: string = ''; // Model for search input
+  patients: Patient[] = [];  // Original list of patients
+  filteredPatients: Patient[] = [];  // Patients filtered by search
+
+  constructor(
+    private patientService: PatientService,
+    private router: Router,
+    private docauth: DocauthService
+  ) {}
+
+  ngOnInit(): void {
     this.getPatients();
   }
-  getPatients(){
 
-    this.patientService.getPatientList().subscribe(data=>{
-      this.patients=data;
-    })
+  // Fetching the patient list from the backend
+  getPatients(): void {
+    this.patientService.getPatientList().subscribe(data => {
+      this.patients = data;
+      this.filteredPatients = data; // Initially, show all patients
+    });
   }
 
-  update(id:number){
-
-    this.router.navigate(['update-patient',id])
-
+  // Search function to filter patients based on name or ID
+  searchPatient(): void {
+    if (this.searchQuery) {
+      this.filteredPatients = this.patients.filter(patient =>
+        patient.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+        patient.id.toString().includes(this.searchQuery)
+      );
+    } else {
+      this.filteredPatients = this.patients; // Show all patients if search is cleared
+    }
   }
-  delete(id:number){
-    this.patientService.delete(id).subscribe(data=>{
+
+  // Update a patient's details
+  update(id: number): void {
+    this.router.navigate(['update-patient', id]);
+  }
+
+  // Delete a patient
+  delete(id: number): void {
+    this.patientService.delete(id).subscribe(data => {
       console.log(data);
-      this.getPatients();
-    })
+      this.getPatients(); // Refresh the patient list after deletion
+    });
   }
-  view(id:number)
-  {
-    this.router.navigate(['view-patient',id]);
+
+  // View a patient's details
+  view(id: number): void {
+    this.router.navigate(['view-patient', id]);
   }
-  logout()
-  {
+
+  // Logout the doctor
+  logout(): void {
     this.docauth.logout();
-    this.router.navigate(['home'])
+    this.router.navigate(['home']);
   }
-  assignMedicine(patientId: number) {
+
+  // Assign medicine to a patient
+  assignMedicine(patientId: number): void {
     this.router.navigate(['/view-medicine'], { queryParams: { patientId } });
   }
+  searchPatients() {
+    const query = this.searchQuery.toLowerCase().trim();
   
+    this.filteredPatients = this.patients.filter(patient => {
+      const nameMatch = patient.name.toLowerCase().includes(query);
+      const idMatch = patient.id.toString().includes(query);
+      return nameMatch || idMatch;
+    });
+  }
   
 }

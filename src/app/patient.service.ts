@@ -36,4 +36,6 @@ export class PatientService {
   sendPrescription(id: number, request: { phoneNumber: string, message: string }): Observable<any> {
     return this.httpclient.put(`${this.baseUrl}/${id}/send-prescription`, request);
   }
+
+  
 }

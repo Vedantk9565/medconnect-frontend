@@ -37,6 +37,30 @@
   <br>
     <a style="color: rgb(86, 86, 86); font-size: xx-large;">Patient List </a>
     
+
+    <div>
+      <input 
+        type="text" 
+        [(ngModel)]="searchQuery" 
+        (input)="searchPatient()" 
+        placeholder="Search by Name or ID"
+      />
+    </div>
+    
+    <div *ngIf="filteredPatients.length > 0">
+      <ul>
+        <li *ngFor="let patient of filteredPatients">
+          {{ patient.name }} - {{ patient.id }}
+        </li>
+      </ul>
+    </div>
+    
+    <div *ngIf="filteredPatients.length === 0 && searchQuery">
+      No patients found.
+    </div>
+    
+
+
     <div style="display: flex; justify-content: flex-end; width: 100%; padding: 10px;">
       <a style="color: white; padding: 10px; background-color: #007bff; border-radius: 5px;" class="nav-link active" aria-current="page" routerLink="/create-patient">Add Patient</a>
     </div>
@@ -60,7 +84,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let patient of patients">
+        <tr *ngFor="let patient of filteredPatients">
             <td> {{patient.id}}</td>
             <td> {{patient.name}}</td>
             <td> {{patient.age}}</td>
